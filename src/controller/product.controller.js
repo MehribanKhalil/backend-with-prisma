@@ -16,7 +16,7 @@ const getAllProducts = async (req, res) => {
 const getByIdProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log('mehi', id);
+    console.log("mehi", id);
     const product = await prisma.product.findUnique({
       where: {
         id: +id,
@@ -89,35 +89,36 @@ const deleteProduct = async (req, res) => {
 };
 
 const getProductsByCategory = async (req, res) => {
-    try {
-      const { categoryName } = req.body;
-      console.log('Category Name:', categoryName);
-  
-      const category = await prisma.category.findFirst({
-        where: {
-          categoryName: categoryName,
-        },
-      });
-      console.log('Category:', category);
-  
-      if (!category) {
-        return res.status(404).json({ message: "Category not found" });
-      }
-  
-      const productsByCat = await prisma.product.findMany({
-        where: {
-          categoryId: category.id,
-        },
-      });
-      console.log('Products:', productsByCat);
-  
-      res.status(200).json(productsByCat);
-    } catch (error) {
-      console.error('Error:', error.message);
-      res.status(500).json({ error: error.message });
+  try {
+    const { categoryName } = req.body;
+    console.log("Category Name:", categoryName);
+
+    const category = await prisma.category.findFirst({
+      where: {
+        categoryName: categoryName,
+      },
+    });
+    console.log("Category:", category);
+
+    if (!category) {
+      return res.status(404).json({ message: "Category not found" });
     }
-  };
-  
+
+    const productsByCat = await prisma.product.findMany({
+      where: {
+        categoryId: category.id,
+      },
+    });
+    console.log("Products:", productsByCat);
+
+    res.status(200).json(productsByCat);
+  } catch (error) {
+    console.error("Error:", error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
 
 export {
   getAllProducts,

@@ -50,13 +50,15 @@ model Like {
   productId Int
   isLike    Boolean
   User      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, productId])
 }
 
 model User {
   id                      Int       @id @default(autoincrement())
   name                    String
   email                   String    @unique
-  password                String
+  password                String 
   comments                Comment[]
   resetToken              String?
   resetTokenExpiry        DateTime?
